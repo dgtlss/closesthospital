@@ -6,7 +6,7 @@ use Illuminate\View\Component;
 Use App\Models\Hospital;
 use Illuminate\Http\Request;
 
-class closesthospital extends Component
+class ClosestHospital extends Component
 {
 
     public $hospitals;
