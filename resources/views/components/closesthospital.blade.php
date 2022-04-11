@@ -1,11 +1,11 @@
 <div class="w-full text-center mt-12 p-4 overflow-hidden">
     <h2 class="text-white text-4xl font-bold">
         Your location is: <br>
-        {{ $Api->location['city'] }}, {{ $Api->location['country'] }} <br>
+        {{ $location['city'] }}, {{ $location['country'] }} <br>
     </h2>
     <p class=" text-gray-200 text-md font-semibold mt-2">The closest hospitals to you are below:</p>
     <div class="w-full mt-8 grid lg:grid-cols-3 gap-4 sm:grid-cols-1 md:grid-cols-2 xl:grid-cols-4">
-        @foreach($Api->hospitals as $hospital)
+        @foreach($hospitals as $hospital)
             <div class="rounded">
                 <div class="bg-white border-gray-900 p-2 rounded-md h-64 text-left relative shadow-sm">
                     <div class="absolute bottom-2 left-1">
@@ -50,7 +50,7 @@
 
     <div class="w-full mb-4 mt-12">
         <div class="text-center mx-auto text-slate-500 text-sm">
-            Information accurate as of {{$Api->dateUpdated}} <br>
+            Information accurate as of {{$dateUpdated}} <br>
             Developed by <a href="https://twitter.com/nlangerdev" target="_blank">@nlangerdev</a>
         </div>
     </div>

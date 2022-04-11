@@ -11,7 +11,8 @@ class closesthospital extends Component
 
     public $hospitals;
     public $request;
-    public $Api;
+    public $location;
+    public $dateUpdated;
     /**
      * Create a new component instance.
      *
@@ -34,13 +35,10 @@ class closesthospital extends Component
         $dateUpdated = $hospitals->first()->created_at;
         $dateUpdated = date('D dS M Y H:iA', strtotime($dateUpdated));
 
+        $this->hospitals = $hospitals;
+        $this->dateUpdated = $dateUpdated;
+        $this->location = $location;
 
-        //dd($location);
-        $this->Api = $Api = (object)[
-            'location' => $location,
-            'hospitals' => $hospitals,
-            'dateUpdated' => $dateUpdated
-        ];
     }
 
     public function distance($lat1, $lon1, $lat2, $lon2, $unit) {
@@ -72,6 +70,6 @@ class closesthospital extends Component
      */
     public function render()
     {
-        return view('components.closesthospital')->with('Api', $this->Api);
+        return view('components.closesthospital');
     }
 }
