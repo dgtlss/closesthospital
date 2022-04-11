@@ -70,6 +70,6 @@ class ClosestHospital extends Component
      */
     public function render()
     {
-        return view('components.closesthospital');
+        return view('components.closest-hospital');
     }
 }
