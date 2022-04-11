@@ -13,6 +13,6 @@
         <div class="w-full overflow-hidden bg-red-600 text-center text-white py-2 animate-pulse shadow-sm">
             In the event of an emergency please dial 999 for proper assistance!
         </div>
-        <x-closest-hospital/>
+    </x-closest-hospital>
     </body>
 </html>
