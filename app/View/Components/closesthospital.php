@@ -11,6 +11,7 @@ class closesthospital extends Component
 
     public $hospitals;
     public $request;
+    public $Api;
     /**
      * Create a new component instance.
      *
@@ -21,6 +22,25 @@ class closesthospital extends Component
         // get all hospitals from the database
         $this->hospitals = Hospital::all();
         $this->request = $request->getClientIP();
+
+        $ipAddress = $this->request;
+        $location = geoip()->getLocation($ipAddress);
+
+        $hospitals = $this->hospitals;
+        foreach($hospitals as $hospital){
+            $hospital->distanceTo = $this->distance($location->lat, $location->lon, $hospital->latitude, $hospital->longitude, "M");
+        }
+        $hospitals = $hospitals->sortBy('distanceTo')->take(8);
+        $dateUpdated = $hospitals->first()->created_at;
+        $dateUpdated = date('D dS M Y H:iA', strtotime($dateUpdated));
+
+
+        //dd($location);
+        $this->Api = $Api = (object)[
+            'location' => $location,
+            'hospitals' => $hospitals,
+            'dateUpdated' => $dateUpdated
+        ];
     }
 
     public function distance($lat1, $lon1, $lat2, $lon2, $unit) {
@@ -52,24 +72,6 @@ class closesthospital extends Component
      */
     public function render()
     {
-        $ipAddress = $this->request;
-        $location = geoip()->getLocation($ipAddress);
-
-        $hospitals = $this->hospitals;
-        foreach($hospitals as $hospital){
-            $hospital->distanceTo = $this->distance($location->lat, $location->lon, $hospital->latitude, $hospital->longitude, "M");
-        }
-        $hospitals = $hospitals->sortBy('distanceTo')->take(8);
-        $dateUpdated = $hospitals->first()->created_at;
-        $dateUpdated = date('D dS M Y H:iA', strtotime($dateUpdated));
-
-
-        //dd($location);
-        $Api = (object)[
-            'location' => $location,
-            'hospitals' => $hospitals,
-            'dateUpdated' => $dateUpdated
-        ];
-        return view('components.closesthospital')->with('Api', $Api);
+        return view('components.closesthospital')->with('Api', $this->Api);
     }
 }
